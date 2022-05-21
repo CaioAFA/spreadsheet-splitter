@@ -32,6 +32,10 @@ app.post('/split', async function(req, res){
 	}
 })
 
+app.get('/', function(req, res){
+	res.render('index')
+})
+
 app.listen(PORT, function(){
   console.log(`Server ONLINE on port ${PORT}`)
 })
