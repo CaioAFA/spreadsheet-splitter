@@ -22,10 +22,20 @@
         <input type="file" name="split-file" id="split-file"/>
       </div>
 
-      <div class="input-group">
-        <input type="submit" id="submit-button" value="Submeter">
+      <div class="input-group justify-end">
+        <input type="submit" id="submit-button" value="Separar">
+      </div>
+
+      <div id="error-message" style="display: none;">
+        Imagine aqui algum erro irado
       </div>
     </form>
+  </div>
+
+  <div id="loading-wrapper" style="display: none;">
+    <h2>Carregando...</h2>
+    <br>
+    <img src="/loading.gif" alt="loading" id="loading">
   </div>
 
   <script src="/index.js"></script>

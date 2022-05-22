@@ -1,4 +1,5 @@
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+const dateHelper = require('../helper/time')
 
 function splitDataToFiles(fileName, data, splitSize){
   let exportCounter = 1
@@ -10,7 +11,7 @@ function splitDataToFiles(fileName, data, splitSize){
     i += 1
 
     if(i == splitSize){
-      let splittedFileName = `./output/${fileName}-${exportCounter}.csv`
+      let splittedFileName = getSplittedFileName(fileName, exportCounter)
       splittedFiles.push(splittedFileName)
       writeCsvFile(splittedFileName, contentToWrite)
       contentToWrite = []
@@ -20,12 +21,16 @@ function splitDataToFiles(fileName, data, splitSize){
   });
 
   if(contentToWrite.length){
-    let splittedFileName = `./output/${fileName}-${exportCounter}.csv`
+    let splittedFileName = getSplittedFileName(fileName, exportCounter)
     splittedFiles.push(splittedFileName)
     writeCsvFile(splittedFileName, contentToWrite)
   }
 
   return splittedFiles
+}
+
+const getSplittedFileName = (fileName, exportCounter) => {
+  return `./output/${fileName}-${dateHelper.getNowInMilliseconds()}-${exportCounter}.csv`
 }
 
 async function writeCsvFile(outputFile, data){

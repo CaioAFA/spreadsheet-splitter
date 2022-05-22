@@ -1,11 +1,10 @@
-// Read and write csv files: https://stackabuse.com/reading-and-writing-csv-files-with-node-js/
-
 const csvParser = require('./parser/csv')
 const csvWriter = require('./writer/csv')
 const zipWriter = require('./writer/zip')
 const fileHelper = require('./helper/file')
+const dateHelper = require('./helper/time')
 
-async function split(filePath, splitSize){
+const split = async (filePath, splitSize) => {
   const fileName = fileHelper.getFileName(filePath)
   const fileExtension = fileHelper.getFileExtension(filePath)
 
@@ -26,9 +25,10 @@ async function split(filePath, splitSize){
 
   const splittedFiles = csvWriter.splitDataToFiles(fileName, data, splitSize)
 
-  const completeFileName = `${fileName}.zip`
+  const nowInMilliseconds = dateHelper.getNowInMilliseconds()
+  const completeFileName = `${fileName}-${nowInMilliseconds}.zip`
   const outputZipFile = `./output/${completeFileName}`
-  zipWriter.createZipFile(splittedFiles, outputZipFile)
+  await zipWriter.createZipFile(splittedFiles, outputZipFile)
 
   return completeFileName
 }

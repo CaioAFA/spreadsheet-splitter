@@ -18,6 +18,10 @@ app.post('/split', async function(req, res){
 		const splitSize = req.body.splitSize ?? 1000
 		const file = req.files.file
 
+		if(!file || (file && !file.originalFilename.includes('.csv'))){
+			throw new Error("You should send a .csv file to split")
+		}
+
 		// Move file to import folder with the correct name
 		const newFilePath = `./import/${file.originalFilename}`
 		fs.renameSync(file.path, newFilePath)

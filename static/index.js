@@ -12,16 +12,28 @@ submitButton.addEventListener('click', (e) => {
     const xhr = new XMLHttpRequest()
 
     xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            if (xhr.status === 200) { // When data is received successfully
-                const downloadUrl = xhr.response
-                var a = document.createElement("a");
-                document.body.appendChild(a);
-                a.style = "display: none";
-                a.href = downloadUrl;
-                a.download = "filename";
-                a.click();
+        showLoading()
+        hideError()
+        if (xhr.readyState == 4) {
+            try{
+                const response = xhr.response
+                if (xhr.status === 200) { // When data is received successfully
+                    var a = document.createElement("a");
+                    document.body.appendChild(a);
+                    a.style = "display: none";
+                    a.href = response;
+                    a.download = "filename";
+                    a.click();
+                }
+                else{
+                    showError(response)
+                }
             }
+            catch(error){
+                showError(error.message)
+            }
+
+            hideLoading()
         }
     };
     
@@ -31,3 +43,21 @@ submitButton.addEventListener('click', (e) => {
 
     e.preventDefault()
 })
+
+function showLoading(){
+    document.getElementById('loading-wrapper').style.display = 'flex'
+}
+
+function hideLoading(){
+    document.getElementById('loading-wrapper').style.display = 'none'
+}
+
+function showError(errorMessage){
+    const errorMessageDiv = document.getElementById('error-message')
+    errorMessageDiv.innerText = errorMessage
+    errorMessageDiv.style.display = 'block'
+}
+
+function hideError(){
+    document.getElementById('error-message').style.display = 'none'
+}
