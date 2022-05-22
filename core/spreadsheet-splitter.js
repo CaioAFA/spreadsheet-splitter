@@ -26,10 +26,11 @@ async function split(filePath, splitSize){
 
   const splittedFiles = csvWriter.splitDataToFiles(fileName, data, splitSize)
 
-  const outputZipFile = `./output/${fileName}.zip`
+  const completeFileName = `${fileName}.zip`
+  const outputZipFile = `./output/${completeFileName}`
   zipWriter.createZipFile(splittedFiles, outputZipFile)
 
-  return outputZipFile
+  return completeFileName
 }
 
 module.exports = {

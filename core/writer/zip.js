@@ -14,8 +14,6 @@ const createZipFile = async (files, outputFilePath) => {
   }
 
   zip.writeZip(outputFilePath);
-
-  console.log(`Created ${outputFilePath} successfully`);
 }
 
 module.exports = {

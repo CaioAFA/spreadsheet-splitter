@@ -23,17 +23,22 @@ app.post('/split', async function(req, res){
 		fs.renameSync(file.path, newFilePath)
 
 		const zipFile = await spreadsheetSplitter.split(newFilePath, splitSize)
-		console.log(zipFile)
-		res.render('index')
+		res.send(`/download/${zipFile}`)
 	}
 	catch(error){
 		console.log(error)
 		res.status(500)
+		res.send(error.message)
 	}
 })
 
 app.get('/', function(req, res){
 	res.render('index')
+})
+
+app.get('/download/:file', function(req, res){
+	const downloadFile = req.params.file
+	res.download(`./output/${downloadFile}`)
 })
 
 app.listen(PORT, function(){

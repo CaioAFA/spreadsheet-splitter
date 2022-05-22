@@ -14,4 +14,7 @@ app.use(multiparty({uploadDir: './import'}))
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+// Serve static files
+app.use(express.static('static'))
+
 module.exports = app
