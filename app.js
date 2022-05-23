@@ -1,6 +1,7 @@
 const app = require('./config/config')
 const fs = require('fs')
 const spreadsheetSplitter = require('./core/spreadsheet-splitter')
+require('./cron/scheduler')
 
 // Get Port Passed By CLI
 const myArgs = process.argv.slice(2);
